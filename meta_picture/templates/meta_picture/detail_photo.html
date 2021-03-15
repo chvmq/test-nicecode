@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card mb-3">
+    <div class="card-header">
+        {{ image }}
+    </div>
+
+    <div class="card-body">
+        <img alt="" class="float-left mr-3" src="{{ image.image.url }}" width="350">
+    </div>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th scope="row">Высота</th>
+            <td>{{ meta_data.high }}</td>
+        <tr>
+            <th scope="row">Ширина</th>
+            <td>{{ meta_data.width }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Средний цвет</th>
+            <td bgcolor="{{ hex_color }}">Вот такой цвет</td>
+        </tr>
+        <tr>
+            <th scope="row">Количество монет</th>
+            <td>{{ meta_data.number_of_coins }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Сумма монет</th>
+            <td>{{ meta_data.sum_of_coins }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+{% endblock content %}

@@ -1,27 +1,41 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 from .forms import UploadImageForm
+from .models import *
+from .services import *
 
 
 def index_form(request):
-    print('hello waweqwe')
     context = {
+        'images': Image.objects.all(),
         'form': UploadImageForm(None)
     }
-    template_name = 'meta_picture/index.html'
-    return render(request, template_name, context)
+    return render(request, 'meta_picture/index.html', context)
 
 
 def index_action_form(request):
-    print('hello world')
-    print(request.FILES)
+    for filename, file in request.FILES.items():
+        f_name = request.FILES[filename].name
     form = UploadImageForm(request.POST, request.FILES)
-    print()
     if form.is_valid():
-        print('is valid')
-        form.save()
-    else:
-        print('ERROR')
-        print(form.errors)
+        new_image = form.save(commit=False)
+        new_image.title = form.cleaned_data['title']
+        new_image.slug = set_default_slug(new_image.title)
+        new_image.save()
+
+    get_meta_data(f_name, new_image.slug)
+
     return HttpResponseRedirect('/')
+
+
+def detail_photo(request, slug):
+    image = Image.objects.get(slug=slug)
+    context = {
+        'image': image,
+        'meta_data': ImageMetaData.objects.get(image=image),
+        'hex_color': rgb2hex(
+            ImageMetaData.objects.get(image=image).average_color
+        )
+    }
+    return render(request, 'meta_picture/detail_photo.html', context)

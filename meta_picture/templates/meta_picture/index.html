@@ -6,4 +6,15 @@
 
     <button type="submit" class="btn btn-primary">SUBMIT</button>
 </form>
+
+{% for image in images %}
+<div class="card" style="width: 18rem;">
+  <img src="{{ image.image.url }}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{ image }}</h5>
+
+    <a href="{{ image.get_absolute_url }}" class="btn btn-primary stretched-link">Detail</a>
+  </div>
+</div>
+{% endfor %}
 {% endblock content %}
