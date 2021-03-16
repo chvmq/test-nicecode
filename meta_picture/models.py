@@ -21,6 +21,7 @@ class ImageMetaData(models.Model):
     high = models.CharField('Высота', max_length=10)
     width = models.CharField('Ширина', max_length=10)
     average_color = models.CharField('Средний цвет картинки', max_length=255)
+    average_color_image = models.ImageField(upload_to='medians/')
     number_of_coins = models.PositiveSmallIntegerField('Количество монет', blank=True, null=True)
     sum_of_coins = models.PositiveSmallIntegerField('Сумма монет', blank=True, null=True)
 

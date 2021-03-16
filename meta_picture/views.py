@@ -24,7 +24,7 @@ def index_action_form(request):
         new_image.slug = set_default_slug(new_image.title)
         new_image.save()
 
-    get_meta_data(f_name, new_image.slug)
+    create_meta_data(f_name, new_image.slug)
 
     return HttpResponseRedirect('/')
 
